@@ -88,6 +88,57 @@ R25: R24 Top 6 父代 + 中低温精细优化 + r=20 重算
 
 ---
 
+## 实验数据全景数据库与可视化平台
+
+本项目不仅产出 6 条最终提交序列，还构建了一套完整的**实验数据管理系统**，将 27 轮迭代产生的全部序列、指标、文档整合为可查询、可可视化的数据库与交互式网站，为实验复现和结果验证提供了基础设施。
+
+### SQLite 实验数据库
+
+| 表 | 记录数 | 内容 |
+|:---|------:|:-----|
+| sequences | 243,386 | 去重氨基酸序列（SHA-256 主键），含 best_score / pTM / pLDDT / chromo |
+| metrics | 1,474,887 | 所有预测指标（多轮次、多 recycle、多模型） |
+| rounds | 27 | 各轮次元数据（父代、温度、候选数、最佳分数） |
+| artifacts | 5,539 | 文件证据索引（JSON / CSV / FASTA / PDB / Markdown） |
+| lineage_edges | 16,000+ | 序列谱系关系（父代→子代） |
+| documents | 157 | 实验文档全文（各轮 report / runbook / handoff） |
+| submissions | 198 | 历史提交记录 |
+
+数据库自动导入脚本扫描全部工作目录，解析 JSON / CSV / FASTA / Markdown，统一 pLDDT 尺度至 0-1，建立跨轮次的谱系追踪链。
+
+### 三栏交互式网站（Protein Design Atlas）
+
+基于数据库搭建了 API 文档风格的三栏交互式网站：
+
+- **技术栈**: FastAPI + React + Cytoscape.js + Plotly.js + R/ggplot2 + Docker Compose
+- **前端端口**: `http://localhost:18082`
+- **API 文档**: `http://localhost:18000/docs`（Swagger UI）
+
+| 功能模块 | 说明 |
+|:---------|:-----|
+| Dashboard | 各轮次分数趋势图、pTM × chromo 散点图、关键指标卡片 |
+| Sequence Vault | 24 万条序列可检索，支持按轮次/分数/长度筛选 |
+| Topology Network | Cytoscape 谱系网络图，节点颜色映射分数，可点击查看详情 |
+| Docs Browser | 157 篇实验文档在线浏览 |
+| R 图表报告 | R/ggplot2 自动生成高质量图表（分数轨迹、热图、identity 矩阵、父代贡献分析） |
+
+### 自动化 R 分析报告
+
+通过 Docker 容器中的 R 环境自动生成分析报告，包含 6 张高质量图表：
+
+1. 各轮最高分演进图
+2. pTM × Chromophore pLDDT 前沿散点图
+3. 后期轮次分数分布小提琴图
+4. Top 30 候选指标热图
+5. Top 40 序列 identity 矩阵
+6. 父代贡献分析图
+
+报告路径：`protein-design-atlas/artifacts/analysis_report_v1.html`
+
+> 这套数据库与可视化系统使得评审可以**交互式地验证**我们的实验过程：从任意一条提交序列出发，追溯其完整的生成谱系、每一轮的评分变化、所属父代和实验条件，确保结果完全可复现。
+
+---
+
 ## 关联仓库
 
 本项目由三个仓库组成：
