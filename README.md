@@ -110,9 +110,10 @@ R25: R24 Top 6 父代 + 中低温精细优化 + r=20 重算
 
 基于数据库搭建了 API 文档风格的三栏交互式网站：
 
+- **在线访问**: http://120.48.98.164:18082
+- **API 文档 (Swagger)**: http://120.48.98.164:18000/docs
+- **源码仓库**: [protein-design-atlas](https://github.com/ZHIPUU/protein-design-atlas)
 - **技术栈**: FastAPI + React + Cytoscape.js + Plotly.js + R/ggplot2 + Docker Compose
-- **前端端口**: `http://localhost:18082`
-- **API 文档**: `http://localhost:18000/docs`（Swagger UI）
 
 | 功能模块 | 说明 |
 |:---------|:-----|
@@ -148,6 +149,7 @@ R25: R24 Top 6 父代 + 中低温精细优化 + r=20 重算
 | **竞赛核心仓库** (本仓库) | 标准化 pipeline 脚本 + 最终结果，便于评审快速复现 | [SnowFold-GFP-2026](https://github.com/ZHIPUU/SnowFold-GFP-2026) |
 | **完整实验记录** | 全部 27 轮实验脚本、中间文件、数据、文档 | [SnowFold-GFP-2026-Full](https://github.com/ZHIPUU/SnowFold-GFP-2026-Full) |
 | **gssh CLI** | 自主开发的远程 GPU 服务器管理工具 | [gssh](https://github.com/ZHIPUU/gssh) |
+| **Protein Design Atlas** | 数据库 + 交互式可视化平台 ([在线访问](http://120.48.98.164:18082)) | [protein-design-atlas](https://github.com/ZHIPUU/protein-design-atlas) |
 
 ---
 
